@@ -1,16 +1,16 @@
 // src/components/Canvas.js
-import React, { useRef, useState, useEffect } from 'react';
-import './Canvas.css';
+import React, { useEffect, useRef, useState } from "react";
+import "./Canvas.css";
 
 function Canvas() {
   const canvasRef = useRef(null);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [selectedNode, setSelectedNode] = useState(null);
-  const [startNodeId, setStartNodeId] = useState(''); // Starting node ID from input
+  const [startNodeId, setStartNodeId] = useState(""); // Starting node ID from input
   const [mstEdges, setMstEdges] = useState([]);
   const [totalWeight, setTotalWeight] = useState(0);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
 
   const addNode = (x, y) => {
@@ -64,8 +64,10 @@ function Canvas() {
   };
 
   const runPrimsAlgorithm = () => {
-    const startNode = nodes.find((node) => node.id === parseInt(startNodeId, 10));
-    
+    const startNode = nodes.find(
+      (node) => node.id === parseInt(startNodeId, 10)
+    );
+
     if (!startNode) {
       setError("Please enter a valid starting node");
       return;
@@ -76,7 +78,7 @@ function Canvas() {
       return;
     }
 
-    setError('');
+    setError("");
     setTotalWeight(0);
     const mstSet = new Set();
     const edgeList = [...edges];
@@ -125,9 +127,9 @@ function Canvas() {
     setNodes([]);
     setEdges([]);
     setMstEdges([]);
-    setStartNodeId(''); // Reset start node ID
+    setStartNodeId(""); // Reset start node ID
     setTotalWeight(0);
-    setError('');
+    setError("");
     setSelectedNode(null);
   };
 
@@ -148,15 +150,15 @@ function Canvas() {
       ctx.beginPath();
       ctx.moveTo(node1.x, node1.y);
       ctx.lineTo(node2.x, node2.y);
-      ctx.strokeStyle = 'red';
+      ctx.strokeStyle = "red";
       ctx.lineWidth = 2;
       ctx.stroke();
       ctx.closePath();
 
       const midX = (node1.x + node2.x) / 2;
       const midY = (node1.y + node2.y) / 2;
-      ctx.fillStyle = 'black';
-      ctx.font = '16px Arial';
+      ctx.fillStyle = "black";
+      ctx.font = "16px Arial";
       ctx.fillText(weight, midX, midY);
     });
 
@@ -164,7 +166,7 @@ function Canvas() {
       ctx.beginPath();
       ctx.moveTo(node1.x, node1.y);
       ctx.lineTo(node2.x, node2.y);
-      ctx.strokeStyle = 'green';
+      ctx.strokeStyle = "green";
       ctx.lineWidth = isAnimating ? 5 : 3;
       ctx.stroke();
       ctx.closePath();
@@ -173,13 +175,14 @@ function Canvas() {
     nodes.forEach((node) => {
       ctx.beginPath();
       ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
-      ctx.fillStyle = selectedNode && selectedNode.id === node.id ? 'purple' : 'black';
+      ctx.fillStyle =
+        selectedNode && selectedNode.id === node.id ? "purple" : "black";
       ctx.fill();
-      ctx.strokeStyle = 'white';
+      ctx.strokeStyle = "white";
       ctx.lineWidth = 3;
       ctx.stroke();
-      ctx.fillStyle = 'white';
-      ctx.font = '14px Arial';
+      ctx.fillStyle = "white";
+      ctx.font = "14px Arial";
       ctx.fillText(node.id, node.x - 5, node.y + 5);
       ctx.closePath();
     });
@@ -187,9 +190,9 @@ function Canvas() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     draw(ctx);
-  }, [nodes, edges, mstEdges, selectedNode, isAnimating]);
+  }, [nodes, edges, mstEdges, selectedNode, isAnimating, draw]);
 
   return (
     <div className="canvas-container">
@@ -211,7 +214,7 @@ function Canvas() {
         width={800}
         height={600}
         onClick={handleCanvasClick}
-        style={{ cursor: 'crosshair' }}
+        style={{ cursor: "crosshair" }}
       ></canvas>
     </div>
   );
