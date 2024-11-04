@@ -1,5 +1,5 @@
 // src/components/Canvas.js
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import "./Canvas.css";
 
 function Canvas() {
@@ -143,7 +143,7 @@ function Canvas() {
     setEdges(updatedEdges);
   };
 
-  const draw = (ctx) => {
+  const draw = useCallback((ctx) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     edges.forEach(({ node1, node2, weight }) => {
@@ -186,7 +186,7 @@ function Canvas() {
       ctx.fillText(node.id, node.x - 5, node.y + 5);
       ctx.closePath();
     });
-  };
+  }, [edges, mstEdges, nodes, selectedNode, isAnimating]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
