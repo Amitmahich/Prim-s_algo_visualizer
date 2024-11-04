@@ -1,0 +1,143 @@
+/* src/components/Canvas.css */
+.canvas-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+canvas {
+  background-color: #d3d3d3;
+  border: 2px solid #333;
+  margin-bottom: 20px;
+  cursor: add;
+}
+
+/* Controls styles */
+.controls input[type="number"] {
+  width: 200px;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.controls input[type="number"]:focus {
+  border-color: #4caf50; /* Green border on focus */
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Green shadow */
+}
+
+.controls input[type="number"]::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+.run-button {
+  background-color: #4a47a3;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.run-button:hover {
+  background-color: #6a63c9;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 200px;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:nth-child(2) {
+  background-color: #4caf50; /* Green */
+}
+
+button:nth-child(3) {
+  background-color: #f44336; /* Red */
+}
+
+button:nth-child(4) {
+  background-color: #2196f3; /* Blue */
+}
+
+.total-weight {
+  color: #ff851b; /* Orange color */
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* Responsive Styles for Canvas */
+@media (max-width: 768px) {
+  .canvas-container {
+    flex-direction: column-reverse; /* Stack items vertically on smaller screens */
+    align-items: center; /* Center align items */
+    justify-content: center; /* Center justify */
+  }
+
+  canvas {
+    width: 100%; /* Make canvas full width on small screens */
+    max-width: 100%; /* Prevent overflow */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .controls {
+    width: 100%; /* Full width for controls */
+    align-items: center; /* Center controls */
+  }
+
+  .controls input[type="number"] {
+    width: 90%; /* Responsive width for input fields */
+    max-width: none; /* Remove max-width restriction */
+  }
+
+  button {
+    width: 90%; /* Responsive width for buttons */
+    max-width: none; /* Remove max-width restriction */
+  }
+}
+
+@media (max-width: 480px) {
+  .controls input[type="number"] {
+    font-size: 14px; /* Smaller font size for input fields on very small screens */
+  }
+
+  button {
+    font-size: 16px; /* Smaller font size for buttons on very small screens */
+  }
+
+  .total-weight,
+  .error {
+    font-size: 16px; /* Adjust font size for messages */
+  }
+}

@@ -17,13 +17,21 @@
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  margin-bottom: 20px;
   color: white;
 }
-
+.App-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: blueviolet;
+  font-weight: bold;
+  text-decoration: underline;
+}
 .App-link {
   color: #61dafb;
 }
@@ -34,5 +42,27 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+/* src/App.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  body {
+    padding: 10px; /* Reduce padding on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px; /* Smaller font size for very small screens */
   }
 }
