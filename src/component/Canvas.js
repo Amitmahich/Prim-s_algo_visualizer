@@ -13,6 +13,9 @@ function Canvas() {
   const [error, setError] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
 
+  // Check if initial instructions should be shown
+  const showInstructions = nodes.length === 0;
+
   const addNode = (x, y) => {
     setNodes((prevNodes) => [...prevNodes, { x, y, id: prevNodes.length }]);
   };
@@ -209,6 +212,16 @@ function Canvas() {
         {error && <p className="error">{error}</p>}
         <p className="total-weight">Total Weight of MST: {totalWeight}</p>
       </div>
+      
+      {/* Instructions Overlay */}
+      {showInstructions && (
+        <div className="overlay-instructions">
+          <p>1. Click to plot some points.</p>
+          <p>2. Connect two points by clicking on them consecutively.</p>
+          <p>3. Run the algorithm</p>
+        </div>
+      )}
+
       <canvas
         ref={canvasRef}
         width={800}

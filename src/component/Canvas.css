@@ -83,6 +83,20 @@ button:nth-child(3) {
 button:nth-child(4) {
   background-color: #2196f3; /* Blue */
 }
+.overlay-instructions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 
 .total-weight {
   color: #ff851b; /* Orange color */
