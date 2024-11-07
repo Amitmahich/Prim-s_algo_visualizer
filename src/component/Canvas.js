@@ -1,5 +1,4 @@
-// src/components/Canvas.js
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./Canvas.css";
 
 function Canvas() {
@@ -21,7 +20,27 @@ function Canvas() {
   };
 
   const addEdge = (node1, node2) => {
-    const weight = Math.floor(Math.random() * 50) + 1;
+    // Check if edge already exists
+    const edgeExists = edges.some(
+      (edge) =>
+        (edge.node1 === node1 && edge.node2 === node2) ||
+        (edge.node1 === node2 && edge.node2 === node1)
+    );
+
+    if (edgeExists) {
+      alert("An edge already exists between these nodes!");
+      return;
+    }
+
+    // Prompt user for weight
+    const weight = parseInt(prompt("Enter the weight of the edge:"), 10);
+
+    // Validate weight input
+    if (isNaN(weight) || weight <= 0) {
+      alert("Please enter a valid positive number for weight.");
+      return;
+    }
+
     setEdges((prevEdges) => [...prevEdges, { node1, node2, weight }]);
   };
 
@@ -146,50 +165,53 @@ function Canvas() {
     setEdges(updatedEdges);
   };
 
-  const draw = useCallback((ctx) => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  const draw = useCallback(
+    (ctx) => {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    edges.forEach(({ node1, node2, weight }) => {
-      ctx.beginPath();
-      ctx.moveTo(node1.x, node1.y);
-      ctx.lineTo(node2.x, node2.y);
-      ctx.strokeStyle = "red";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      ctx.closePath();
+      edges.forEach(({ node1, node2, weight }) => {
+        ctx.beginPath();
+        ctx.moveTo(node1.x, node1.y);
+        ctx.lineTo(node2.x, node2.y);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.closePath();
 
-      const midX = (node1.x + node2.x) / 2;
-      const midY = (node1.y + node2.y) / 2;
-      ctx.fillStyle = "black";
-      ctx.font = "16px Arial";
-      ctx.fillText(weight, midX, midY);
-    });
+        const midX = (node1.x + node2.x) / 2;
+        const midY = (node1.y + node2.y) / 2;
+        ctx.fillStyle = "black";
+        ctx.font = "16px Arial";
+        ctx.fillText(weight, midX, midY);
+      });
 
-    mstEdges.forEach(({ node1, node2 }) => {
-      ctx.beginPath();
-      ctx.moveTo(node1.x, node1.y);
-      ctx.lineTo(node2.x, node2.y);
-      ctx.strokeStyle = "green";
-      ctx.lineWidth = isAnimating ? 5 : 3;
-      ctx.stroke();
-      ctx.closePath();
-    });
+      mstEdges.forEach(({ node1, node2 }) => {
+        ctx.beginPath();
+        ctx.moveTo(node1.x, node1.y);
+        ctx.lineTo(node2.x, node2.y);
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = isAnimating ? 5 : 3;
+        ctx.stroke();
+        ctx.closePath();
+      });
 
-    nodes.forEach((node) => {
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
-      ctx.fillStyle =
-        selectedNode && selectedNode.id === node.id ? "purple" : "black";
-      ctx.fill();
-      ctx.strokeStyle = "white";
-      ctx.lineWidth = 3;
-      ctx.stroke();
-      ctx.fillStyle = "white";
-      ctx.font = "14px Arial";
-      ctx.fillText(node.id, node.x - 5, node.y + 5);
-      ctx.closePath();
-    });
-  }, [edges, mstEdges, nodes, selectedNode, isAnimating]);
+      nodes.forEach((node) => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
+        ctx.fillStyle =
+          selectedNode && selectedNode.id === node.id ? "purple" : "black";
+        ctx.fill();
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        ctx.fillStyle = "white";
+        ctx.font = "14px Arial";
+        ctx.fillText(node.id, node.x - 5, node.y + 5);
+        ctx.closePath();
+      });
+    },
+    [edges, mstEdges, nodes, selectedNode, isAnimating]
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -208,19 +230,21 @@ function Canvas() {
         />
         <button onClick={runPrimsAlgorithm}>Run Prim's Algorithm</button>
         <button onClick={resetCanvas}>Reset</button>
-        <button onClick={undoLastNode}>Undo</button>
+        <button onClick={undoLastNode}>UndoNode</button>
         {error && <p className="error">{error}</p>}
         <p className="total-weight">Total Weight of MST: {totalWeight}</p>
       </div>
-      
+
       {/* Instructions Overlay */}
-      {showInstructions && (
-        <div className="overlay-instructions">
-          <p>1. Click to plot some points.</p>
-          <p>2. Connect two points by clicking on them consecutively.</p>
-          <p>3. Run the algorithm</p>
-        </div>
-      )}
+{showInstructions && (
+  <div className="overlay-instructions">
+    <p>1. Click on the canvas to plot points (nodes).</p>
+    <p>2. Connect two points by clicking on them consecutively.</p>
+    <p>3. Enter the weight for each edge manually in the prompt when prompted.</p>
+    <p>4. Run Prim's Algorithm to calculate the Minimum Spanning Tree.</p>
+  </div>
+)}
+
 
       <canvas
         ref={canvasRef}

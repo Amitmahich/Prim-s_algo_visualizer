@@ -97,10 +97,9 @@ button:nth-child(4) {
   line-height: 1.5;
 }
 
-
 .total-weight {
-  color: #ff851b; /* Orange color */
-  font-size: 18px;
+  color: #cf660a; /* Orange color */
+  font-size: 26px;
   font-weight: bold;
   margin-top: 10px;
 }
